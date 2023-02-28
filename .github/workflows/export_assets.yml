@@ -32,5 +32,4 @@ jobs:
           token: ${{ secrets.ACCESS_TO_CONSUME_REPOSITORY }}
           repository: guilhermeqmaia/consume_assets_repository
           event-type: update-assets
-          client-payload: '{"branch_name": "update/assets", "artifact_name": "assets.zip"}'
-          workflow_path: .github/workflows/consume_assets.yml
+          client-payload: '{"branch_name": "update/assets", "artifact_name": "assets"}'

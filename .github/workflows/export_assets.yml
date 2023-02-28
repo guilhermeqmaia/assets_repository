@@ -1,0 +1,35 @@
+name: Upload Artifact
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - images/
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      
+      - name: Zip files
+        run: |
+          zip -r assets.zip images/
+      
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: assets
+          path: assets.zip
+
+
+      - name: Trigger downstream workflow
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.ACCESS_TO_CONSUME_REPOSITORY }}
+          repository: guilhermeqmaia/consume_assets_repository
+          event-type: update-assets
+          client-payload: '{"branch_name": "update/assets", "artifact_name": "assets"}'
